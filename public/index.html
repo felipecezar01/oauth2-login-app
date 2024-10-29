@@ -1,16 +1,48 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Login OAuth App</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bem-vindo - Sistema de Autenticação</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Bem-vindo ao OAuth Login App</h1>
-        <button>Login</button>
-        <button>Registrar</button>
+  <div class="container">
+    <h1>Bem-vindo!</h1>
+    <p>Escolha como você quer se autenticar:</p>
+    <div class="buttons">
+      <a href="/auth/google" class="button google">Login com Google</a>
+      <button onclick="toggleForm('login')" class="button">Login com Email</button>
+      <button onclick="toggleForm('register')" class="button">Registrar com Email</button>
     </div>
+
+    <!-- Formulário de Login -->
+    <div id="loginForm" class="form" style="display: none;">
+      <h2>Login</h2>
+      <form action="/auth/login" method="POST">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Senha" required>
+        <button type="submit" class="button">Entrar</button>
+      </form>
+    </div>
+
+    <!-- Formulário de Registro -->
+    <div id="registerForm" class="form" style="display: none;">
+      <h2>Registrar</h2>
+      <form action="/auth/register" method="POST">
+        <input type="text" name="username" placeholder="Nome de usuário" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Senha" required>
+        <button type="submit" class="button">Registrar</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function toggleForm(formType) {
+      document.getElementById('loginForm').style.display = formType === 'login' ? 'block' : 'none';
+      document.getElementById('registerForm').style.display = formType === 'register' ? 'block' : 'none';
+    }
+  </script>
 </body>
 </html>
