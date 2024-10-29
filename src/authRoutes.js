@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken'); // Importação do JWT
 const { pool } = require('./db'); // Conexão com o banco de dados
 const router = express.Router();
+const authMiddleware = require('./authMiddleware');
 
 // Rota de Registro
 router.post('/register', async (req, res) => {
@@ -64,5 +65,9 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Erro ao fazer login' });
   }
 });
+
+router.get('/profile', authMiddleware, (req, res) => {
+    res.json({ message: `Bem-vindo, ${req.user.username}!`, user: req.user });
+  });
 
 module.exports = router;
