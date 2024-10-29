@@ -11,7 +11,21 @@
     <h1>Bem-vindo!</h1>
     <p>Escolha como você quer se autenticar:</p>
     <div class="buttons">
-      <a href="/auth/google" class="button google">Login com Google</a>
+      <!-- Botão do Google com personalização -->
+      <div id="g_id_onload"
+           data-client_id="SUA_CLIENT_ID.apps.googleusercontent.com"
+           data-login_uri="http://localhost:3000/auth/google/callback"
+           data-auto_prompt="false">
+      </div>
+      <div class="g_id_signin"
+           data-type="standard"
+           data-shape="rectangular"
+           data-theme="outline"
+           data-text="signin_with"
+           data-size="large"
+           data-logo_alignment="left">
+      </div>
+
       <button onclick="toggleForm('login')" class="button">Login com Email</button>
       <button onclick="toggleForm('register')" class="button">Registrar com Email</button>
     </div>
@@ -19,7 +33,7 @@
     <!-- Formulário de Login -->
     <div id="loginForm" class="form" style="display: none;">
       <h2>Login</h2>
-      <form action="/auth/login" method="POST">
+      <form id="loginFormElement">
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Senha" required>
         <button type="submit" class="button">Entrar</button>
@@ -29,7 +43,7 @@
     <!-- Formulário de Registro -->
     <div id="registerForm" class="form" style="display: none;">
       <h2>Registrar</h2>
-      <form action="/auth/register" method="POST">
+      <form id="registerFormElement">
         <input type="text" name="username" placeholder="Nome de usuário" required>
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Senha" required>
@@ -44,5 +58,9 @@
       document.getElementById('registerForm').style.display = formType === 'register' ? 'block' : 'none';
     }
   </script>
+
+  <script src="scripts.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
 </body>
 </html>
