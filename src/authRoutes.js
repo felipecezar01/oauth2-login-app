@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken'); // Importação do JWT
 const { pool } = require('./db'); // Conexão com o banco de dados
 const router = express.Router();
 const authMiddleware = require('./authMiddleware');
+const passport = require('../passportConfig');
 
 // Rota de Registro
 router.post('/register', async (req, res) => {
@@ -68,6 +69,16 @@ router.post('/login', async (req, res) => {
 
 router.get('/profile', authMiddleware, (req, res) => {
     res.json({ message: `Bem-vindo, ${req.user.username}!`, user: req.user });
-  });
+});
+
+// Rota para iniciar o login com Google
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+// Callback do Google para concluir o login
+router.get('/google/callback', passport.authenticate('google', {
+  failureRedirect: '/'
+}), (req, res) => {
+  res.json({ message: 'Login com Google realizado com sucesso!', user: req.user });
+});
 
 module.exports = router;
